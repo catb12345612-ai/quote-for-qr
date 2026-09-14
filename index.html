@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Motivation</title>
+    <style>
+        /* Core Styling & Dynamic Background Setup */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background 0.5s ease;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #1a1a1a;
+        }
+
+        /* Glassmorphism Quote Container */
+        .quote-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            width: 85%;
+            max-width: 800px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+            margin-bottom: 80px;
+            transition: background-color 0.5s ease;
+        }
+
+        .quote-text {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* Developer Footer Styling */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: #fff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 20px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .developer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .dev-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #00d2ff;
+            object-fit: cover;
+            background: #fff;
+        }
+
+        .dev-text strong {
+            font-size: 1.1em;
+            color: #00d2ff;
+            letter-spacing: 1px;
+        }
+
+        .dev-text span {
+            display: block;
+            font-size: 0.85em;
+            color: #ccc;
+            margin-top: 3px;
+        }
+
+        .review-btn {
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .review-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 210, 255, 0.6);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            .quote-text { font-size: 1.6em; }
+            .footer { flex-direction: column; text-align: center; justify-content: center; }
+            .developer-info { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quote-container" id="quoteBox">
+        <div class="quote-text" id="quoteDisplay">Loading motivation...</div>
+    </div>
+
+    <!-- Developer & Copyright Footer -->
+    <div class="footer">
+        <div class="developer-info">
+            <!-- Developer Logo (You can replace this source URL with your actual hosted logo image) -->
+            <img src="https://ui-avatars.com/api/?name=S+Z+A&background=00d2ff&color=fff&rounded=true&bold=true" alt="Developer Logo" class="dev-logo">
+            <div class="dev-text">
+                <strong>Syed Zeeshaan Ali 07</strong>
+                <span>High-Fledged Engineering And Digital Tech Solutions</span>
+                <span>&copy; 2026 All Rights Reserved.</span>
+            </div>
+        </div>
+        <a href="https://catb12345612-ai.github.io/Syed-Zeeshaan-Ali-High-Fledged-Engineering-And-Digital-Tech-Solutions-REVIEW/" target="_blank" class="review-btn">Leave a Review</a>
+    </div>
+
+    <script>
+        // Array of 20 Starting Phrases
+        const quoteStarts = [
+            "Success is", "The journey of a thousand miles is", "Your true potential is", "Believe in yourself because it is",
+            "Every new day is", "Hard work is", "Dream big because your ambition is", "The only limit is", 
+            "Your dedication to your goals is", "A positive mindset is", "True greatness is", "The power of perseverance is", 
+            "Every obstacle you face is", "The secret to real progress is", "Inner strength is", "Courage in the face of fear is", 
+            "The path to victory is", "Continuous innovation is", "Your ability to grow is", "The fire within your soul is"
+        ];
+        
+        // Array of 20 Ending Phrases
+        const quoteEnds = [
+            "what you make of it every single day.", "the ultimate key to lasting happiness.", "waiting to be completely unlocked.", 
+            "a massive step towards personal greatness.", "the solid foundation of true success.", "entirely within your reach right now.", 
+            "always worth fighting for in the end.", "the spark that lights up the dark.", "closer than you might actually think.", 
+            "the ultimate reward for your patience.", "exactly what defines your legacy.", "the perfect bridge between your goals and reality.", 
+            "a hidden opportunity designed for you.", "the force that eventually changes the world.", "measured purely by your resilience.", 
+            "the greatest adventure you will ever embark on.", "paved with absolute determination.", "a true reflection of your invincible spirit.", 
+            "the powerful catalyst for major change.", "exactly what pushes you forward when things get hard."
+        ];
+
+        // Dynamically generate exactly 400 unique quotes (20 starts * 20 ends)
+        const allQuotes = [];
+        for (let i = 0; i < quoteStarts.length; i++) {
+            for (let j = 0; j < quoteEnds.length; j++) {
+                allQuotes.push(quoteStarts[i] + " " + quoteEnds[j]);
+            }
+        }
+
+        function loadNewInterface() {
+            // 1. Pick a completely random quote from the 400 generated quotes
+            const randomQuoteIndex = Math.floor(Math.random() * allQuotes.length);
+            document.getElementById('quoteDisplay').innerText = '"' + allQuotes[randomQuoteIndex] + '"';
+
+            // 2. Fetch a random, auto-shrinking, high-quality background image (No errors)
+            const randomImageId = Math.floor(Math.random() * 1000);
+            document.body.style.backgroundImage = `url('https://picsum.photos/1920/1080?random=${randomImageId}')`;
+
+            // 3. Generate a random color overlay for the glassmorphism box so the UI looks different every time
+            const randomHue = Math.floor(Math.random() * 360);
+            document.getElementById('quoteBox').style.backgroundColor = `hsla(${randomHue}, 80%, 30%, 0.4)`;
+        }
+
+        // Trigger the randomization immediately when someone scans the code / opens the link
+        window.onload = loadNewInterface;
+    </script>
+
+</body>
+</html>
